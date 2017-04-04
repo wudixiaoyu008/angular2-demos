@@ -4,10 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
+import { ZippyComponent } from './zippy.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ZippyComponent
   ],
   imports: [
     BrowserModule,
