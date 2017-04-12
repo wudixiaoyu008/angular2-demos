@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h1>myform</h1>
+            <form #f="ngForm" (ngSubmit)="onSubmit(f.form)">  <!-- ngSubmit is an event binding, once submit, invode the onSubmit() function, #f is a template reference variable, which is binded to the whole form -->
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input ngModel #name="ngModel" type="text" class="form-control" required minlength="3" name="name"
+                    > <!-- # defines a template reference variable called name, which is bind to the input to the ngModel object -->
+                    <div *ngIf="name.touched && name.errors">
+                        <div class="alert alert-danger" *ngIf="name.errors.required">
+                            Name is required.
+                        </div>
+                        <div class="alert alert-danger" *ngIf="name.errors.minlength">
+                            Name should be minimum {{name.errors.minlength.requiredLength}} characters.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text"
+                        class="form-control"
+                        required
+                        ngModel
+                        name="email"
+                        #email="ngModel"
+                        minlength=3
+                    >
+                    <div *ngIf="email.touched && email.errors">
+                        <div class="alert alert-danger" *ngIf="email.errors.required">
+                            Email is required
+                        </div>
+                        <div class="alert alert-danger" *ngIf="email.errors.minlength">
+                            Email should be minimum {{email.errors.minlength.requiredLength}} character
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="frequency">Frequency of emails</label>
+                    <select name="frequency" id="frequency" class="form-control" required ngModel #frequency="ngModel">
+                        <option value=""></option>
+                        <option *ngFor="let frequency of frequencies" value="{{frequency.id}}">{{frequency.label}}</option>
+                    </select>
+                    <div class="alert alert-danger" *ngIf="frequency.touched && !frequency.valid">
+                        This is required field.
+                    </div>
+                </div>
+                <button [disabled]="!f.valid" class="btn btn-success" type="submit">Subsribe</button>
+            </form>
+        </div>
+    </div>
+</div>
