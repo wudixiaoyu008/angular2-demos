@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { CustomValidator } from './customvalidator';
 
 @Component({
     selector: 'formvalidator',
@@ -12,15 +13,49 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 
 export class FormValidator {
-    signupForm: FormGroup;
+
+    form: FormGroup;
+
     constructor(fb: FormBuilder){
-        this.signupForm = fb.group({
-            name: ['', Validators.required],
-            email: [],
-            billing: fb.group({
-                cardNumber: ['', Validators.required],
-                expiry: ['', Validators.required]
-            })
-        });
+        this.form = fb.group({
+            oldPassword: ['', Validators.required],
+            // oldPassword: new FormControl('', Validators.required),
+            newPassword: ['', Validators.compose([
+                Validators.required,
+                CustomValidator.complexPassword
+            ])],
+            confirmPassword: ['', Validators.required]
+        }, { validator: CustomValidator.passwordsShouldMatch });
     }
+
+    // // oldPassword = new FormControl(['', Validators.required]);
+    //
+    // constructor(){
+    //     this.form = new FormGroup({
+    //         // 'oldPassword': this.oldPassword
+    //         'oldPassword': new FormControl(['', Validators.required]),
+    //     })
+    // }
+
+    // form: FormGroup;
+    // constructor(private fb: FormBuilder) { }
+    //
+    // ngOnInit(): void {
+    //     this.buildForm();
+    // }
+    //
+    // buildForm(): void {
+    //     this.form = this.fb.group({
+    //         'oldPassword': ['', Validators.required]
+    //     });
+    // }
+    changePassword(){
+        var oldPassword = this.form.get('oldPassword');
+        if (oldPassword.value != '1234')
+            oldPassword.setErrors({ validOldPassword: true });
+
+        if (this.form.valid)
+            alert("Password successfully changed.");
+    }
+
 }
