@@ -28,27 +28,6 @@ export class FormValidator {
         }, { validator: CustomValidator.passwordsShouldMatch });
     }
 
-    // // oldPassword = new FormControl(['', Validators.required]);
-    //
-    // constructor(){
-    //     this.form = new FormGroup({
-    //         // 'oldPassword': this.oldPassword
-    //         'oldPassword': new FormControl(['', Validators.required]),
-    //     })
-    // }
-
-    // form: FormGroup;
-    // constructor(private fb: FormBuilder) { }
-    //
-    // ngOnInit(): void {
-    //     this.buildForm();
-    // }
-    //
-    // buildForm(): void {
-    //     this.form = this.fb.group({
-    //         'oldPassword': ['', Validators.required]
-    //     });
-    // }
     changePassword(){
         var oldPassword = this.form.get('oldPassword');
         if (oldPassword.value != '1234')

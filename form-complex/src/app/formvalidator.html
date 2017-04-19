@@ -2,30 +2,31 @@
     <div class="form-group">
         <label for="oldPassword">Current Password</label>
         <input
-            id="oldPassword"
             type="password"
             formControlName="oldPassword"
             name="oldPassword"
             class="form-control">
-        <div *ngIf="oldPassword.touched && oldPassword.errors">
+        <div *ngIf="form.controls['oldPassword'].hasError && form.controls['oldPassword'].touched">
             <div
-                *ngIf="oldPassword.errors.required"
+                *ngIf="form.controls['oldPassword'].hasError('required')"
                 class="alert alert-danger">Old password is required.</div>
             <div
-                *ngIf="oldPassword.errors.validOldPassword"
+                *ngIf="form.controls['oldPassword'].hasError('validOldPassword')"
                 class="alert alert-danger">Old password is incorrect.</div>
         </div>
     </div>
-
-
 
     <div class="form-group">
         <label for="newPassword">New Password</label>
         <input
             formControlName="newPassword"
-            type="text"
+            type="password"
             name="newPassword"
             class="form-control">
+        <div *ngIf="form.controls['newPassword'].touched && form.controls['newPassword'].hasError">
+            <div *ngIf="form.controls['newPassword'].hasError('required')" class="alert alert-danger">New password is required.</div>
+            <div *ngIf="form.controls['newPassword'].hasError('complexPassword')" class="alert alert-danger">Password cannot be less than 5 characters.</div>
+        </div>
     </div>
     <div class="form-group">
         <label for="confirmPassword">Confirm Password</label>
@@ -34,6 +35,14 @@
             type="text"
             name="confirmPassword"
             class="form-control">
+            <div *ngIf="form.controls['confirmPassword'].touched && form.controls['confirmPassword'].hasError">
+                <div *ngIf="form.controls['confirmPassword'].hasError('required')" class="alert alert-danger">
+                    Confirm password is required.
+                </div>
+                <div *ngIf="form.hasError('passwordsShouldMatch')" class="alert alert-danger">
+                    Password doesn't match.
+                </div>
+            </div>
     </div>
     <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Change Password</button>
 </form>
